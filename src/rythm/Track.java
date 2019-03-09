@@ -30,7 +30,7 @@ public class Track {
 	private String filename;
 	private int difficulty;//Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse tous les beats passer : quelquesoit leur énergie).
 	private float seuil;//Détermine fonction de la difficulté le seuil de niveau d'énergie pour les blocs que l'on crée.
-	private Block block=new Block();
+	private Block block=new Block(100, 100, 0, 0, false);
 	
 	public Track(int world_width,int world_height) {
 		this.width=(int) (0.8*world_width);
