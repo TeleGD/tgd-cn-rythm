@@ -9,12 +9,6 @@ public class Track {
 	private String date;
 	private String filename;
 	
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-		
-	}
-	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		
-	}
 	public int lwbd(){
 		return 0;
 		
