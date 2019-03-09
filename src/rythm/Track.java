@@ -24,4 +24,13 @@ public class Track {
 		return score;
 	}
 
+	@Override
+	public void update (GameContainer container, StateBasedGame game, int delta) {
+		/* Méthode exécutée environ 60 fois par seconde */
+	}
+
+	@Override
+	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		/* Méthode exécutée environ 60 fois par seconde */
+	}
 }
