@@ -63,18 +63,22 @@ public class World extends BasicGameState {
 			this.setState (1);
 			game.enterState (2, new FadeOutTransition (), new FadeInTransition ());
 		}
+		
 	}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		/* Méthode exécutée environ 60 fois par seconde */
-		this.width = container.getWidth ();
-		this.height = container.getHeight ();
-		track = new Track(this.height , this.width);
+		track.render(container,game,context);
+		//System.out.println(width+" "+height);
 	}
 
 	public void play (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée une unique fois au début du jeu */
+		this.width = container.getWidth ();
+		this.height = container.getHeight ();
+		
+		track = new Track(this.width , this.height);
 	}
 
 	public void pause (GameContainer container, StateBasedGame game) {
