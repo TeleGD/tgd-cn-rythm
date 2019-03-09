@@ -46,13 +46,14 @@ public class Block {
 		if(this.posy - this.height >= world.height) {
 			this.setLife(false); // Tue la case si depasse du cadre du jeu
 		}
-		if(this.posy + this.height >= player.) {
+		if(this.posy + this.height >= player.height) {
 			
 		}
 	}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		/* Méthode exécutée environ 60 fois par seconde */
+		context.setColor(Color.green);
+		context.fillRect(0, 0, 30, 30);
 	}
 }
