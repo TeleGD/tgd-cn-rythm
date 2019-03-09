@@ -11,6 +11,7 @@ public class Block {
 	private int speed;
 	private int score;
 	private boolean life;
+	private boolean aPrendre;
 	
 	
 	public boolean getLife() {
@@ -27,23 +28,27 @@ public class Block {
 		this.speed = 0;
 		this.score = 0;
 		this.life = true;
+		this.aPrendre = false;
 	}
 	
-	public Block(int posx, int posy, int speed, int score) {
+	public Block(int posx, int posy, int speed, int score, boolean aPrendre) {
 		this.posx = posx;
 		this.posy = posy;
 		this.speed = speed;
 		this.score = score;
 		this.life = true;
+		this.aPrendre = aPrendre;
 	}
 	
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		this.posy = this.posy + speed*delta;
-		if(this.posy >= world.height) {
-			this.setLife(false); // Tue la case si depasse 
+		if(this.posy - this.height >= world.height) {
+			this.setLife(false); // Tue la case si depasse du cadre du jeu
 		}
-		// Gerer si le joueur colisionne la case
+		if(this.posy + this.height >= player.) {
+			
+		}
 	}
 
 	@Override
