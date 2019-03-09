@@ -43,18 +43,18 @@ public class Block {
 	
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		/*this.posy = this.posy + speed*delta;
+		this.posy = this.posy + speed*delta;
 		if(this.posy - this.height >= world.height) {
 			this.setLife(false); // Tue la case si depasse du cadre du jeu
 		}
 		if(this.posy + this.height >= player.height) {
 			
-		}*/
+		}
 	}
 
 	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		context.setColor(Color.green);
-		context.fillRect(this.posx, this.posy, 30, 30);
+		context.fillRect(0, 0, 30, 30);
 	}
 }
