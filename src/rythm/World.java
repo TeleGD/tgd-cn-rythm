@@ -14,7 +14,8 @@ public class World extends BasicGameState {
 	private int state;
 	private int width;
 	private int height;
-
+	private Track track;
+	
 	public World (int ID) {
 		this.ID = ID;
 		this.state = 0;
@@ -67,6 +68,9 @@ public class World extends BasicGameState {
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		/* Méthode exécutée environ 60 fois par seconde */
+		this.width = container.getWidth ();
+		this.height = container.getHeight ();
+		track = new Track(this.height , this.width);
 	}
 
 	public void play (GameContainer container, StateBasedGame game) {
