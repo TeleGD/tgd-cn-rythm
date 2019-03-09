@@ -5,7 +5,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="tgd-cn-rythm/res/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="res"/>
+	<classpathentry exported="true" kind="lib" path="res"/>
 	<classpathentry kind="lib" path="lib/ibxm.jar"/>
 	<classpathentry kind="lib" path="lib/jinput.jar"/>
 	<classpathentry kind="lib" path="lib/jnlp.jar"/>

@@ -10,12 +10,23 @@ public class Block {
 	
 	private int speed;
 	private int score;
+	private boolean life;
+	
+	
+	public boolean getLife() {
+		return this.life;
+	}
+	
+	public void setLife(boolean life) {
+		this.life = life;
+	}
 	
 	public Block() {
 		this.posx = 0;
 		this.posy = 0;
 		this.speed = 0;
 		this.score = 0;
+		this.life = true;
 	}
 	
 	public Block(int posx, int posy, int speed, int score) {
@@ -23,11 +34,16 @@ public class Block {
 		this.posy = posy;
 		this.speed = speed;
 		this.score = score;
+		this.life = true;
 	}
 	
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		/* Méthode exécutée environ 60 fois par seconde */
+		this.posy = this.posy + speed*delta;
+		if(this.posy >= world.height) {
+			this.setLife(false); // Tue la case si depasse 
+		}
+		// Gerer si le joueur colisionne la case
 	}
 
 	@Override

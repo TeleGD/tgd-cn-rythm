@@ -7,6 +7,17 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.Color;
 
+import v4lk.lwbd.BeatDetector;
+import v4lk.lwbd.BeatDetector.AudioType;
+import v4lk.lwbd.BeatDetector.DetectorSensitivity;
+import v4lk.lwbd.decoders.Decoder;
+import v4lk.lwbd.decoders.JLayerMp3Decoder;
+import v4lk.lwbd.util.Beat;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public class Track {
 	private int width;
 	private int height;
@@ -28,9 +39,9 @@ public class Track {
 	
 	
 	
-	public int lwbd(){
-		return 0;
-		
+	public Beat[] lwbd() throws IOException {
+		File audioFile = new File("res/songs/paulette.mp3");
+		return BeatDetector.detectBeats(audioFile, AudioType.MP3);
 	}
 	
 	public int getScore() {
