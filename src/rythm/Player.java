@@ -1,6 +1,11 @@
 package rythm;
 
 import java.util.List;
+
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
+
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Player{
@@ -22,12 +27,12 @@ public class Player{
         this.speed = 0.;
     }
 
-    @Override
+    //@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		/* Méthode exécutée environ 60 fois par seconde */
 	}
 
-	@Override
+	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		/* Méthode exécutée environ 60 fois par seconde */
 	}
