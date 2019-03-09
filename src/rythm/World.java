@@ -75,7 +75,7 @@ public class World extends BasicGameState {
 
 	public void play (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée une unique fois au début du jeu */
-		this.width = container.getWidth ();
+		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
 		
 		track = new Track(this.width , this.height);

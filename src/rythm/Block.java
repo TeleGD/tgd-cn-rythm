@@ -3,6 +3,7 @@ package rythm;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.Color;
 
 public class Block {
 	private int posx;
@@ -40,7 +41,7 @@ public class Block {
 		this.aPrendre = aPrendre;
 	}
 	
-	@Override
+	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		this.posy = this.posy + speed*delta;
 		if(this.posy - this.height >= world.height) {
@@ -51,7 +52,7 @@ public class Block {
 		}
 	}
 
-	@Override
+	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		context.setColor(Color.green);
 		context.fillRect(0, 0, 30, 30);

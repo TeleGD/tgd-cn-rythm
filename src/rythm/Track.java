@@ -21,20 +21,22 @@ import java.io.IOException;
 public class Track {
 	private int width;
 	private int height;
-	private int world_width;
-	private int world_height;
+	//private int world_width;//INUTILISE
+	//private int world_height;//INUTILISE
 	private int posX;
 	private int posY;
 	private int score;
 	private String date;
 	private String filename;
+	private int difficulty;//Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse tous les beats passer : quelquesoit leur énergie).
+	private float seuil;//Détermine fonction de la difficulté le seuil de niveau d'énergie pour les blocs que l'on crée.
+	private Block block=new Block();
 	
 	public Track(int world_width,int world_height) {
 		this.width=(int) (0.8*world_width);
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
 		this.posY=0;
-		System.out.println(world_width+" "+world_height+" "+width+" "+height+" "+posX+" "+posY);
 	}
 	
 	
@@ -64,6 +66,7 @@ public class Track {
 		context.fillRect(posX+width*3/5,posY,2,height);
 		context.fillRect(posX+width*4/5,posY,2,height);
 		context.fillRect(posX+width,posY,2,height);
+		block.render(container, game, context);
 		/* Méthode exécutée environ 60 fois par seconde */
 		//System.out.println("Coucou render !"+posX+" "+posY+" "+width+" "+height);
 	}
