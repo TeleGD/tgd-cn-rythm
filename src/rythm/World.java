@@ -20,14 +20,12 @@ public class World extends BasicGameState {
 	private int height;
 	private Track track;
 	private Player player;
-<<<<<<< HEAD
+
 	private int stateMenu;
 	private Image fondMenu;
-	private Font font;
-||||||| merged common ancestors
-=======
+	private Image bouton1;
+	private Image bouton2;
 
->>>>>>> 5b37cd9c594f14275ec81cad2126b2834fc30fd8
 	
 	public World (int ID) {
 		this.ID = ID;
@@ -41,21 +39,16 @@ public class World extends BasicGameState {
 	}
 
 	@Override
-<<<<<<< HEAD
+
 	public void init (GameContainer container, StateBasedGame game) throws SlickException  {
 		/* Méthode exécutée une unique fois au chargement du programme */
-||||||| merged common ancestors
-	public void init (GameContainer container, StateBasedGame game) {
-		/* Méthode exécutée une unique fois au chargement du programme */
-=======
-	public void init (GameContainer container, StateBasedGame game) {
-		/* Méthode exécutée une unique ois au chargement du programme */
->>>>>>> 5b37cd9c594f14275ec81cad2126b2834fc30fd8
+
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		System.out.println(width + " ; " + height);
-		this.fondMenu = new Image("res\\images\\fond_retro.jpg");
-		
+		this.fondMenu = new Image("res\\images\\fond_retro.png");
+		this.bouton1 = new Image ("res\\images\\bouton_jouer.png");
+		this.bouton2 = new Image ("res\\images\\bouton_choisir.png");
 	}
 
 	@Override
@@ -87,8 +80,22 @@ public class World extends BasicGameState {
 			this.setState(1);
 			game.enterState (2, new FadeOutTransition (), new FadeInTransition ());
 		}
-		track.update(container,  game,  delta);
-		player.update(container,game,delta);
+		if(stateMenu == 0) {
+			int mx = container.getInput().getMouseX();
+            int my = container.getInput().getMouseY();
+            boolean isMouseClicked = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
+            if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 && my <=  this.height / 10 + this.height / 4  ) {
+            	this.stateMenu = 1;
+            }
+            if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 + this.height / 10 && my <=  this.height / 4 + 2 *this.height / 10)   {
+            	System.out.println("CLIIIIIIC SUR CHOSIR");
+            }
+		}
+		else
+		{
+			track.update(container,  game,  delta);
+			player.update(container,game,delta);
+		}
 	}
 
 	@Override
@@ -97,8 +104,14 @@ public class World extends BasicGameState {
 		/* Méthode exécutée environ 60 fois par seconde */
 		if (stateMenu == 0) {
 			context.drawImage(this.fondMenu.getScaledCopy(this.width, this.height), 0, 0 );
-			context.drawString( "Le jeu du Gros Son sa Mère", this.width/2 - 150 , 0);
 			
+			// bouton jouer sa mère !
+			context.drawImage(this.bouton1.getScaledCopy(this.width/10, this.height/10), this.width / 10, this.height / 4);
+			
+			//bouton choisir le gros son 
+			context.drawImage(this.bouton2.getScaledCopy(this.width/10, this.height/10), this.width / 10   , this.height / 4 + height / 10);
+			
+			 
 		}
 		else {
 			track.render(container,game,context);
