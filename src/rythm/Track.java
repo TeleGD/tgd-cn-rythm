@@ -4,7 +4,11 @@ package rythm;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
+
 import org.newdawn.slick.Color;
 
 import v4lk.lwbd.BeatDetector;
@@ -37,7 +41,11 @@ public class Track {
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
+	public static Image goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png");
+	public static Image badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
 	private int k=0;
+	private Image background;
+
 
 	
 	public Track(int world_width,int world_height,int difficulty) {
@@ -49,12 +57,11 @@ public class Track {
 		ArrayList<Long> listTime=listBlocks(this.seuil);
 		ArrayList<Integer> listRoute=getRoute(listTime);
 		for(int u=0;u<listRoute.size();u++) {
-			System.out.println(listRoute.get(u));
 			//System.out.println(listTime.size());
 			timer.schedule(new TimerTask() {
 				  @Override
 				  public void run() {
-					  block = new Block(posX+width*listRoute.get(k)/5,0,speed,0,false,width/5);
+					  block = new Block(posX+width*listRoute.get(k)/5,0,speed,0,false,width/5,height);
 					  blocs.add(block);
 					  k++;
 					  System.out.println(k);
@@ -66,6 +73,7 @@ public class Track {
 			}, listTime.get(u));
 			//System.out.println(i);
 		}
+		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
 	}
 	
 	//Réglage de la vitesse en fonction de la difficulté choisie
@@ -161,28 +169,31 @@ public class Track {
 
 	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(Color.blue);
-		context.fillRect(this.posX,this.posY,this.width,this.height);
-		context.setColor(Color.white);
-		context.fillRect(this.posX,this.posY,2,this.height);
-		context.fillRect(this.posX+this.width/5,this.posY,2,this.height);
-		context.fillRect(posX+width*2/5,posY,2,height);
-		context.fillRect(posX+width*3/5,posY,2,height);
-		context.fillRect(posX+width*4/5,posY,2,height);
-		context.fillRect(posX+width,posY,2,height);
-		context.fillRect(posX,27*height/30, width, 2);
-		
+
+		// context.setColor(Color.blue);
+		// context.fillRect(this.posX,this.posY,this.width,this.height);
+		// context.setColor(Color.white);
+		// context.fillRect(this.posX,this.posY,2,this.height);
+		// context.fillRect(this.posX+this.width/5,this.posY,2,this.height);
+		// context.fillRect(posX+width*2/5,posY,2,height);
+		// context.fillRect(posX+width*3/5,posY,2,height);
+		// context.fillRect(posX+width*4/5,posY,2,height);
+		// context.fillRect(posX+width,posY,2,height);
+		// context.fillRect(posX,27*height/30, width, 2);
 		for(Block block : blocs) {
-			if(block != null) {
+			if(block!=null) {
 				block.render(container, game, context);
-			} else {
-				System.out.println("AU SECOURS AU SECOURS AU SECOURS");
-			}
+			}			
 		}
+	
+
+		
 		/* Méthode exécutée environ 60 fois par seconde */
 		
 		//time++;
 		//context.setColor(Color.white);
 		//context.drawString("Time : "+);
+
+		background.draw(this.posX, this.posY);
 	}
 }
