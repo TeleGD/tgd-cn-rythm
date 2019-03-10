@@ -117,6 +117,7 @@ public class World extends BasicGameState {
 		else {
 			track.render(container,game,context);
 			player.render(container, game, context);
+			
 		}
 	}
 

@@ -53,6 +53,7 @@ public class Block {
 		// context.fillRect(posx,posy,width, 30);
 
 		if(this.score >=0){
+			goodBlock.getScaledCopy(this.width,this.height);
 			goodBlock.draw(this.posx, this.posy);
 		}
 		else{

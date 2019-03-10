@@ -43,7 +43,7 @@ public class Track {
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
-	public static Image goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png");
+	public static Image goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png").getScaledCopy(245, 245);
 	public static Image badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
 	private int k=0;
 	private Image background;
@@ -54,6 +54,7 @@ public class Track {
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
 		this.posY=0;
+		//this.goodBlock.getScaledCopy(254/1272*width, 254/1272*width);
 		setSpeed(difficulty);
 		ArrayList<Long> listTime=listBlocks(this.seuil);
 		ArrayList<Integer> listRoute=getRoute(listTime);
@@ -62,11 +63,14 @@ public class Track {
 			timer.schedule(new TimerTask() {
 				  @Override
 				  public void run() {
-					  block = new Block(posX+width*listRoute.get(k)/5,0,speed,0,false,width/5,height);
+					  //System.out.println(posX+width*listRoute.get(k)/5);
+					  //System.out.println(listRoute.get(k)+" "+listRoute.get(k)*width*254/1274);
+					  //System.out.println(posX+width*140*8/15540);
+					  block = new Block(posX+width*140*8/15540+listRoute.get(k)*width*254/1554,0,speed,0,false,254/1272*width,254/1272*width);
 					  blocs.add(block);
 					  k++;
-					  System.out.println(k);
-					  System.out.println(posX+width*listRoute.get(k)/5);
+					  //System.out.println(k);
+					  
 					  if (block == null) {
 						  System.out.println("AU SECOURS AU SECOURS AU SECOURS");
 					  }
@@ -193,6 +197,7 @@ public class Track {
 		// context.fillRect(posX+width*4/5,posY,2,height);
 		// context.fillRect(posX+width,posY,2,height);
 		// context.fillRect(posX,27*height/30, width, 2);
+		background.draw(this.posX, this.posY);
 		for(Block block : blocs) {
 			if(block!=null) {
 				block.render(container, game, context);
@@ -207,6 +212,6 @@ public class Track {
 		//context.setColor(Color.white);
 		//context.drawString("Time : "+);
 
-		background.draw(this.posX, this.posY);
+		
 	}
 }
