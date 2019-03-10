@@ -78,7 +78,7 @@ public class World extends BasicGameState {
 		/* Méthode exécutée une unique fois au début du jeu */
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
-		track = new Track(this.width , this.height);
+		track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
 	}
 
 	public void pause (GameContainer container, StateBasedGame game) {
