@@ -1,8 +1,11 @@
 package rythm;
 
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -16,10 +19,14 @@ public class World extends BasicGameState {
 	private int height;
 	private Track track;
 	private Player player;
+	private int stateMenu;
+	private Image fondMenu;
+	private Font font;
 	
 	public World (int ID) {
 		this.ID = ID;
 		this.state = 0;
+		this.stateMenu = 0;
 	}
 
 	@Override
@@ -28,11 +35,13 @@ public class World extends BasicGameState {
 	}
 
 	@Override
-	public void init (GameContainer container, StateBasedGame game) {
+	public void init (GameContainer container, StateBasedGame game) throws SlickException  {
 		/* Méthode exécutée une unique fois au chargement du programme */
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		System.out.println(width + " ; " + height);
+		this.fondMenu = new Image("res\\images\\fond_retro.jpg");
+		
 	}
 
 	@Override
@@ -71,9 +80,15 @@ public class World extends BasicGameState {
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		/* Méthode exécutée environ 60 fois par seconde */
-		track.render(container,game,context);
-		//System.out.println(width+" "+height);
-		player.render(container, game, context);
+		if (stateMenu == 0) {
+			context.drawImage(this.fondMenu.getScaledCopy(this.width, this.height), 0, 0 );
+			context.drawString( "Le jeu du Gros Son sa Mère", this.width/2 - 150 , 0);
+			
+		}
+		else {
+			track.render(container,game,context);
+			player.render(container, game, context);
+		}
 	}
 
 	public void play (GameContainer container, StateBasedGame game) {
