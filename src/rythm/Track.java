@@ -5,6 +5,8 @@ package rythm;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppLoader;
@@ -34,36 +36,44 @@ public class Track {
 	private int score;
 	private String date;
 	private String filename;
-	private int difficulty;//Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse tous les beats passer : quelquesoit leur énergie).
-	private float seuil;//Détermine fonction de la difficulté le seuil de niveau d'énergie pour les blocs que l'on crée.
-	//private int time;
-	private int yBlock=0;
+	private int difficulty;// Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse
+							// tous les beats passer : quelquesoit leur énergie).
+	private float seuil;// Détermine fonction de la difficulté le seuil de niveau d'énergie pour les
+						// blocs que l'on crée.
+	// private int time;
+	private int yBlock = 0;
 	private Block block;
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
 	private Image background;
+	private Music song;
 
-	
-	public Track(int world_width,int world_height,int difficulty) {
-		this.width=(int) (0.8*world_width);
-		this.height=world_height;
-		this.posX=(int) (0.1*world_width);
-		this.posY=0;
+	public Track(int world_width, int world_height, int difficulty) {
+		this.width = (int) (0.8 * world_width);
+		this.height = world_height;
+		this.posX = (int) (0.1 * world_width);
+		this.posY = 0;
 		setSpeed(difficulty);
-		ArrayList<Long> listTime=listBlocks(this.seuil);
-		for(long i : listTime) {
+		ArrayList<Long> listTime = listBlocks(this.seuil);
+		for (long i : listTime) {
 			timer.schedule(new TimerTask() {
-				  @Override
-				  public void run() {
-					  block = new Block(posX,0,speed,0,false,width/5, height/5);
-					  blocs.add(block);
-				    // Your database code here
-				  }
+				@Override
+				public void run() {
+					block = new Block(posX, 0, speed, 0, false, width / 5, height / 5);
+					blocs.add(block);
+					// Your database code here
+				}
 			}, i);
 			System.out.println(i);
 		}
 		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
+		try {
+			this.song = new Music("/songs/paulette.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Réglage de la vitesse en fonction de la difficulté choisie
@@ -137,6 +147,11 @@ public class Track {
 	}
 	
 	//private Block block = new Block(posX,0,1,0,false,(int)(width/5));
+
+	public void play (GameContainer container, StateBasedGame game){
+		/* Méthode exécutée une unique fois au début du jeu */
+		song.loop(1, 1);
+	}
 
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
