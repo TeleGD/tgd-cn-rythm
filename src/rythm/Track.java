@@ -18,12 +18,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Track {
 	private int width;
 	private int height;
-	//private int world_width;//INUTILISE
-	//private int world_height;//INUTILISE
 	private int posX;
 	private int posY;
 	private int score;
@@ -31,15 +31,28 @@ public class Track {
 	private String filename;
 	private int difficulty;//Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse tous les beats passer : quelquesoit leur énergie).
 	private float seuil;//Détermine fonction de la difficulté le seuil de niveau d'énergie pour les blocs que l'on crée.
-	
+	//private int time;
+	private int yBlock=0;
+	private Block block;
+	private Timer timer = new Timer();
+
 	
 	public Track(int world_width,int world_height) {
 		this.width=(int) (0.8*world_width);
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
 		this.posY=0;
+		
+		timer.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+				  block = new Block(posX,0,0.5,0,false,width/5);
+			    // Your database code here
+			  }
+		}, 4*1000);
 	}
-		private Block block = new Block(posX,30,0,0,false);
+	
+	
 	
 	
 	
@@ -53,29 +66,33 @@ public class Track {
 		}
 	}
 	
-	public ArrayList<Long> listBlocks (float seuil) {
+	public ArrayList<Long> listBlocks (float seuil,int difficulty) {
 		ArrayList<Long> listTime = new ArrayList<Long>();
+		Long instant;
 		Beat[] beats=lwbd();
 		for(Beat b : beats){
 			if(b.energy>seuil) {
-				listTime.add(b.timeMs);			
+				instant=b.timeMs;
+				listTime.add(instant);	
 			}
 		}
 		return listTime;
 	}
 	
-	//public ;;; genereBlock(int difficulty){
-		
-		
-	//}
 	
 	public int getScore() {
 		return score;
 	}
+	
+	//private Block block = new Block(posX,0,1,0,false,(int)(width/5));
 
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		/* Méthode exécutée environ 60 fois par seconde */
+		if(block!=null) {
+			block.update(container, game, delta);
+		}
+				
 	}
 
 	//@Override
@@ -89,8 +106,14 @@ public class Track {
 		context.fillRect(posX+width*3/5,posY,2,height);
 		context.fillRect(posX+width*4/5,posY,2,height);
 		context.fillRect(posX+width,posY,2,height);
-		block.render(container, game, context);
+		context.fillRect(posX,27*height/30, width, 2);
+		if(block!=null) {
+			block.render(container, game, context);
+		}
 		/* Méthode exécutée environ 60 fois par seconde */
-		//System.out.println("Coucou render !"+posX+" "+posY+" "+width+" "+height);
+		
+		//time++;
+		//context.setColor(Color.white);
+		//context.drawString("Time : "+);
 	}
 }

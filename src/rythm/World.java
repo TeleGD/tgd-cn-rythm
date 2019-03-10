@@ -63,6 +63,7 @@ public class World extends BasicGameState {
 			this.setState (1);
 			game.enterState (2, new FadeOutTransition (), new FadeInTransition ());
 		}
+		track.update(container, game, delta);
 		
 	}
 
@@ -77,7 +78,6 @@ public class World extends BasicGameState {
 		/* Méthode exécutée une unique fois au début du jeu */
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
-		
 		track = new Track(this.width , this.height);
 	}
 
