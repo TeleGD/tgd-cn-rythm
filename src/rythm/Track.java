@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Track {
 	private int width;
@@ -69,14 +70,40 @@ public class Track {
 	public ArrayList<Long> listBlocks (float seuil,int difficulty) {
 		ArrayList<Long> listTime = new ArrayList<Long>();
 		Long instant;
-		Beat[] beats=lwbd();
+		Beat[] beats = lwbd();
 		for(Beat b : beats){
-			if(b.energy>seuil) {
-				instant=b.timeMs;
-				listTime.add(instant);	
+			if(b.energy > seuil) {
+				instant = b.timeMs;
+				listTime.add(instant);
 			}
 		}
 		return listTime;
+	}
+	
+	public ArrayList<Integer> getRoute(ArrayList<Long> listTime) {
+		ArrayList<Integer> routes = new ArrayList<>();
+		for (long instant : listTime) {
+			int i, j = 0;
+			boolean droite = false; boolean gauche = false;
+			boolean[] envisageable = {true, true, true, true, true};
+			boolean encore = true;
+			while (encore) {
+				j = ThreadLocalRandom.current().nextInt(0, 5);	// Entier dans l'intervalle [0;4]
+				// On vérifie qu'il n'y ait pas de bloc dans les deux cases d'à côté :
+				i = listTime.size();
+				while (i >= 0 && listTime.get(i) > instant-2*30/(0.5*0.06)) {	// 2 * taille_block / vitesse(pixels/ms)
+					if (routes.get(i) == j+1) { droite = true; }
+					if (routes.get(i) == j-1) { gauche = true; }
+					i--;
+				} if (droite && gauche) {
+					encore = false;
+				} else { // On vérifie que choisir une autre route est envisageable
+					for (boolean c : envisageable) {
+						if (c) { encore = true; }
+					}
+				}
+			} routes.add(j);
+		} return routes;
 	}
 	
 	
