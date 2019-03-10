@@ -15,6 +15,7 @@ public class World extends BasicGameState {
 	private int width;
 	private int height;
 	private Track track;
+	private Player player;
 	
 	public World (int ID) {
 		this.ID = ID;
@@ -64,7 +65,7 @@ public class World extends BasicGameState {
 			game.enterState (2, new FadeOutTransition (), new FadeInTransition ());
 		}
 		track.update(container, game, delta);
-		
+		player.update(container,game,delta);
 	}
 
 	@Override
@@ -72,13 +73,26 @@ public class World extends BasicGameState {
 		/* Méthode exécutée environ 60 fois par seconde */
 		track.render(container,game,context);
 		//System.out.println(width+" "+height);
+		player.render(container, game, context);
 	}
 
 	public void play (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée une unique fois au début du jeu */
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
+
 		track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
+		player = new Player(this.height, this.width);
+	}
+
+	@Override
+	public void keyPressed(int key, char c) {
+		player.keyPressed(key,c);
+	}
+
+	@Override
+	public void keyReleased(int key, char c) {
+		player.keyReleased(key, c);
 	}
 
 	public void pause (GameContainer container, StateBasedGame game) {
