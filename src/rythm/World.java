@@ -125,8 +125,10 @@ public class World extends BasicGameState {
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
 
-		//track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
+		track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
 		player = new Player(this.height, this.width);
+
+		track.play(container, game);
 	}
 
 	@Override

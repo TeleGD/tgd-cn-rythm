@@ -5,6 +5,8 @@ package rythm;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppLoader;
@@ -45,8 +47,7 @@ public class Track {
 	public static Image badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
 	private int k=0;
 	private Image background;
-
-
+	private Music song;
 	
 	public Track(int world_width,int world_height,int difficulty) {
 		this.width=(int) (0.8*world_width);
@@ -75,6 +76,12 @@ public class Track {
 			//System.out.println(i);
 		}
 		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
+		try {
+			this.song = new Music("res/songs/paulette.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Réglage de la vitesse en fonction de la difficulté choisie
@@ -151,6 +158,11 @@ public class Track {
 	}
 	
 	//private Block block = new Block(posX,0,1,0,false,(int)(width/5));
+
+	public void play (GameContainer container, StateBasedGame game){
+		/* Méthode exécutée une unique fois au début du jeu */
+		song.play();
+	}
 
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
