@@ -3,7 +3,9 @@ package rythm;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -16,6 +18,7 @@ public class World extends BasicGameState {
 	private int height;
 	private Track track;
 	private Player player;
+
 	
 	public World (int ID) {
 		this.ID = ID;
@@ -29,7 +32,7 @@ public class World extends BasicGameState {
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) {
-		/* Méthode exécutée une unique fois au chargement du programme */
+		/* Méthode exécutée une unique ois au chargement du programme */
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		System.out.println(width + " ; " + height);
@@ -50,7 +53,7 @@ public class World extends BasicGameState {
 		/* Méthode exécutée à la disparition de la page */
 		if (this.state == 1) {
 			this.pause (container, game);
-		} else if (this.state == 3) {
+		} else if(this.state == 3) {
 			this.stop (container, game);
 			this.state = 0; // TODO: remove
 		}
@@ -58,25 +61,25 @@ public class World extends BasicGameState {
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		/* Méthode exécutée environ 60 fois par seconde */
+		/* Méthode exécutée environ 60 fis par seconde */
 		Input input = container.getInput ();
 		if (input.isKeyDown (Input.KEY_ESCAPE)) {
-			this.setState (1);
+			this.setState(1);
 			game.enterState (2, new FadeOutTransition (), new FadeInTransition ());
 		}
-		track.update(container, game, delta);
+		track.update(container,  game,  delta);
 		player.update(container,game,delta);
 	}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		/* Méthode exécutée environ 60 fois par seconde */
+		/* Méthode exécutée env iron  60 fois par seconde */
 		track.render(container,game,context);
 		//System.out.println(width+" "+height);
 		player.render(container, game, context);
 	}
 
-	public void play (GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
