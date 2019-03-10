@@ -36,18 +36,9 @@ public class Track {
 	private int score;
 	private String date;
 	private String filename;
-<<<<<<< HEAD
-	private int difficulty;// Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse
-							// tous les beats passer : quelquesoit leur énergie).
-	private float seuil;// Détermine fonction de la difficulté le seuil de niveau d'énergie pour les
-						// blocs que l'on crée.
-	// private int time;
-	private int yBlock = 0;
-=======
 	private int difficulty;//Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse tous les beats passer : quelquesoit leur énergie).
 	private float seuil;//Détermine fonction de la difficulté le seuil de niveau d'énergie pour les blocs que l'on crée.
 	//private int time;
->>>>>>> 3047a0d8c166eeecd30012a12bf33e1512f3af8d
 	private Block block;
 	private Timer timer = new Timer();
 	private double speed;
@@ -82,7 +73,6 @@ public class Track {
 				  }
 			}, listTime.get(u));
 			//System.out.println(i);
->>>>>>> 3047a0d8c166eeecd30012a12bf33e1512f3af8d
 		}
 		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
 		try {
