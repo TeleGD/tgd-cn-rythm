@@ -2,16 +2,14 @@ package rythm;
 
 //import java.util.*;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppLoader;
-
-import org.newdawn.slick.Color;
 
 import v4lk.lwbd.BeatDetector;
 import v4lk.lwbd.BeatDetector.AudioType;
@@ -20,8 +18,6 @@ import v4lk.lwbd.decoders.Decoder;
 import v4lk.lwbd.decoders.JLayerMp3Decoder;
 import v4lk.lwbd.util.Beat;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -42,17 +38,33 @@ public class Track {
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
+	private int k=0;
 	private static Image goodBlock;
 	private static Image badBlock;
-	private int k=0;
-	private Image background;
-	private Music song;
+	//private int k=0;
+	//private Image background;
+	//private Music song;
+	private static boolean areBlocksScaled;
+	private static Image background;
+	private static Audio song;
+	private static float songPos = 0;
+
+	static {
+		Track.goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png");
+		Track.badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
+		Track.areBlocksScaled = false;
+		Track.background = AppLoader.loadPicture("/images/HIGHWAY.png");
+		Track.song = AppLoader.loadAudio("/songs/paulette.ogg");
+		Track.songPos = 0;
+	}
 	private boolean collide;
 	private int sizeBlock;//La taille d'un bloc, pour la modifier plus facilement si jamais
 	private Player player;
 	String diff;//Permet d'afficher la difficulté
 	
 	public Track(int world_width,int world_height,int difficulty,Player player) {
+	
+
 		this.width=(int) (0.8*world_width);
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
@@ -63,15 +75,20 @@ public class Track {
 		ArrayList<Long> listTime=listBlocks(this.seuil);
 		ArrayList<Integer> listRoute=getRoute(listTime);
 		System.out.println(width+" "+254*width/1274);
-		this.goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png").getScaledCopy(sizeBlock, sizeBlock);
-		this.badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png").getScaledCopy(sizeBlock, sizeBlock);
+
+		if (!Track.areBlocksScaled) {
+			Track.areBlocksScaled = true;
+			Track.goodBlock = Track.goodBlock.getScaledCopy(sizeBlock, sizeBlock);
+			Track.badBlock = Track.badBlock.getScaledCopy(sizeBlock, sizeBlock);
+		}
+
 		for(int u=0;u<listRoute.size();u++) {
 			timer.schedule(new TimerTask() {
 				  @Override
 				  public void run() {
 					  block = new Block(posX+width*140*8/15540+listRoute.get(k)*width*254/1554,0,speed,0,false,sizeBlock,sizeBlock);
 					  blocs.add(block);
-					  k++;					  
+					  k++;
 					  if (block == null) {
 						  System.out.println("AU SECOURS AU SECOURS AU SECOURS");
 					  }
@@ -79,16 +96,9 @@ public class Track {
 				  }
 			}, listTime.get(u));
 		}
-		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
-		try {
-			this.song = new Music("res/songs/paulette.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-	
-	
+
+
 	public static Image getGoodBlock() {
 		return goodBlock;
 	}
@@ -96,7 +106,7 @@ public class Track {
 		return badBlock;
 	}
 	//Réglage de la vitesse en fonction de la difficulté choisie
-	
+
 	public void setSpeed(int difficulty) {// Sert à adapter la vitesse de descente des tuiles en fonction de la difficulté choisie.
 		if(difficulty==0){//Si le niveau est choisi en facile
 			this.speed=0.2;
@@ -111,18 +121,16 @@ public class Track {
 			this.diff="Moyen";
 		}
 	}
-	
-	
+
+
 	public Beat[] lwbd(){
 		try {
-			File audioFile = new File("res/songs/paulette.mp3");
-			return BeatDetector.detectBeats(audioFile, AudioType.MP3);
-		}
-		catch(Exception e) {
+			return BeatDetector.detectBeats(AppLoader.openStream("/songs/paulette.mp3"), AudioType.MP3);
+		}  catch (IOException error) {
 			return null;
 		}
 	}
-	
+
 	public ArrayList<Long> listBlocks (float seuil) {//Sert à prendre la lsite des moments forts de la musique et à générer un tableau des moments ou un bloc doit apparaitre dans l'écran//Double ou long ?
 		ArrayList<Long> listTime = new ArrayList<Long>();
 		Long instant;
@@ -136,7 +144,7 @@ public class Track {
 		}
 		return listTime;
 	}
-	
+
 	public ArrayList<Integer> getRoute(ArrayList<Long> listTime) {//Sert à connaitre le numéro de la voie(de 0 à 4) qui devra être emprunté par le bloc en fonction du "numéroé du bloc(comme si les blocs étaient numérotés
 		ArrayList<Integer> routes = new ArrayList<>();
 		for (int k = 0; k < listTime.size(); k++) {
@@ -165,38 +173,40 @@ public class Track {
 			} routes.add(j);
 		} return routes;
 	}
-	
-	
+
+
 	public int getScore() {
 		return score;
 	}
-	
+
 	//private Block block = new Block(posX,0,1,0,false,(int)(width/5));
 
 	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
-		song.play();
+		// Track.song.playAsMusic(1, 1, true);
 	}
-	
+
 	public void pause (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée lors de la mise en pause du jeu */
-		song.pause();
+		Track.songPos = Track.song.getPosition();
+		Track.song.stop();
 	}
 
 	public void resume (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée lors de la reprise du jeu */
-		song.resume();
+		Track.song.playAsMusic(1, .4f, true);
+		Track.song.setPosition(Track.songPos);
 	}
 
 	public void stop (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée une unique fois à la fin du jeu */
-		song.stop();
+		Track.song.stop();
 	}
 
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		/* Méthode exécutée environ 60 fois par seconde */
-		
+
 		for(int i = blocs.size()-1; i >= 0; i--) {
 			/*if(block.collideWithPlayer((int)(player.getPosX()), (int)(player.getPosY()), player.getWidth(), player.getHeight())==true) {
 				System.out.println("Collision !!!!"+player.getPosX()+" "+player.getWidth());
@@ -209,7 +219,7 @@ public class Track {
 				}
 			}
 		}
-				
+
 	}
 
 	//@Override
@@ -225,24 +235,26 @@ public class Track {
 		// context.fillRect(posX+width*4/5,posY,2,height);
 		// context.fillRect(posX+width,posY,2,height);
 		// context.fillRect(posX,27*height/30, width, 2);
-		background.draw(this.posX, this.posY);
+		context.drawImage(Track.background.getScaledCopy(this.width, this.height), this.posX, this.posY);
 		for(int i = blocs.size()-1; i >= 0; i--) {
 			block = blocs.get(i);
 			if(block!=null) {
 				block.render(container, game, context);
+
 			}			
 		context.drawString("Score :\n"+score+"\n"+diff,0,0);
-		}
-	
 
-		
+		}
+
+
+
 		/* Méthode exécutée environs 60 fois par seconde */
-		
+
 		//time++;
 		//context.setColor(Color.white);
 		//context.drawString("Time : "+);
 
-		
+
 	}
 
 	

@@ -12,6 +12,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import app.AppLoader;
+
 public class World extends BasicGameState {
 
 	private int ID;
@@ -20,13 +22,18 @@ public class World extends BasicGameState {
 	private int height;
 	private Track track;
 	private Player player;
-
 	private int stateMenu;
-	private Image fondMenu;
-	private Image bouton1;
-	private Image bouton2;
 
-	
+	private static Image fondMenu;
+	private static Image bouton1;
+	private static Image bouton2;
+
+	static {
+		World.fondMenu = AppLoader.loadPicture("/images/fond_retro.png");
+		World.bouton1 = AppLoader.loadPicture("/images/bouton_jouer.png");
+		World.bouton2 = AppLoader.loadPicture("/images/bouton_choisir.png");
+	}
+
 	public World (int ID) {
 		this.ID = ID;
 		this.state = 0;
@@ -42,13 +49,6 @@ public class World extends BasicGameState {
 
 	public void init (GameContainer container, StateBasedGame game) throws SlickException  {
 		/* Méthode exécutée une unique fois au chargement du programme */
-
-		this.width = container.getWidth ();
-		this.height = container.getHeight ();
-		//System.out.println(width + " ; " + height);
-		this.fondMenu = new Image("res/images/fond_retro.png");
-		this.bouton1 = new Image ("res/images/bouton_jouer.png");
-		this.bouton2 = new Image ("res/images/bouton_choisir.png");
 	}
 
 	@Override
@@ -109,20 +109,20 @@ public class World extends BasicGameState {
 
 		/* Méthode exécutée environ 60 fois par seconde */
 		if (stateMenu == 0) {
-			context.drawImage(this.fondMenu.getScaledCopy(this.width, this.height), 0, 0 );
-			
+			context.drawImage(World.fondMenu.getScaledCopy(this.width, this.height), 0, 0 );
+
 			// bouton jouer sa mère !
-			context.drawImage(this.bouton1.getScaledCopy(this.width/10, this.height/10), this.width / 10, this.height / 4);
-			
-			//bouton choisir le gros son 
-			context.drawImage(this.bouton2.getScaledCopy(this.width/10, this.height/10), this.width / 10   , this.height / 4 + height / 10);
-			
-			 
+			context.drawImage(World.bouton1.getScaledCopy(this.width/10, this.height/10), this.width / 10, this.height / 4);
+
+			//bouton choisir le gros son
+			context.drawImage(World.bouton2.getScaledCopy(this.width/10, this.height/10), this.width / 10   , this.height / 4 + height / 10);
+
+
 		}
 		else {
 			track.render(container,game,context);
 			player.render(container, game, context);
-			
+
 		}
 	}
 
