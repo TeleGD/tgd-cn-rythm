@@ -41,6 +41,9 @@ public class Track {
 	private int k=0;
 	private static Image goodBlock;
 	private static Image badBlock;
+	//private int k=0;
+	//private Image background;
+	//private Music song;
 	private static boolean areBlocksScaled;
 	private static Image background;
 	private static Audio song;
@@ -54,26 +57,36 @@ public class Track {
 		Track.song = AppLoader.loadAudio("/songs/paulette.ogg");
 		Track.songPos = 0;
 	}
+	private boolean collide;
+	private int sizeBlock;//La taille d'un bloc, pour la modifier plus facilement si jamais
+	private Player player;
+	String diff;//Permet d'afficher la difficulté
+	
+	public Track(int world_width,int world_height,int difficulty,Player player) {
+	
 
-	public Track(int world_width,int world_height,int difficulty) {
 		this.width=(int) (0.8*world_width);
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
 		this.posY=0;
+		sizeBlock=254*width/1274;//définition de la taille des blocs
 		setSpeed(difficulty);
+		this.player=player;
 		ArrayList<Long> listTime=listBlocks(this.seuil);
 		ArrayList<Integer> listRoute=getRoute(listTime);
 		System.out.println(width+" "+254*width/1274);
+
 		if (!Track.areBlocksScaled) {
 			Track.areBlocksScaled = true;
-			Track.goodBlock = Track.goodBlock.getScaledCopy(254*width/1274, 254*width/1272);
-			Track.badBlock = Track.badBlock.getScaledCopy(254*width/1274, 254*width/1272);
+			Track.goodBlock = Track.goodBlock.getScaledCopy(sizeBlock, sizeBlock);
+			Track.badBlock = Track.badBlock.getScaledCopy(sizeBlock, sizeBlock);
 		}
+
 		for(int u=0;u<listRoute.size();u++) {
 			timer.schedule(new TimerTask() {
 				  @Override
 				  public void run() {
-					  block = new Block(posX+width*140*8/15540+listRoute.get(k)*width*254/1554,0,speed,0,false,254/1272*width,254/1272*width);
+					  block = new Block(posX+width*140*8/15540+listRoute.get(k)*width*254/1554,0,speed,0,false,sizeBlock,sizeBlock);
 					  blocs.add(block);
 					  k++;
 					  if (block == null) {
@@ -97,12 +110,15 @@ public class Track {
 	public void setSpeed(int difficulty) {// Sert à adapter la vitesse de descente des tuiles en fonction de la difficulté choisie.
 		if(difficulty==0){//Si le niveau est choisi en facile
 			this.speed=0.2;
+			this.diff="Facile";
 		}
 		else if(difficulty==2){//Si le niveau choisi est difficile
 			this.speed=0.8;
+			this.diff="Difficile";
 		}
 		else {//Si le niveau est choisi en moyen
 			this.speed=0.5;
+			this.diff="Moyen";
 		}
 	}
 
@@ -192,6 +208,9 @@ public class Track {
 		/* Méthode exécutée environ 60 fois par seconde */
 
 		for(int i = blocs.size()-1; i >= 0; i--) {
+			/*if(block.collideWithPlayer((int)(player.getPosX()), (int)(player.getPosY()), player.getWidth(), player.getHeight())==true) {
+				System.out.println("Collision !!!!"+player.getPosX()+" "+player.getWidth());
+			}*/
 			block = blocs.get(i);
 			if(block!=null) {
 				block.update(container, game, delta);
@@ -221,7 +240,10 @@ public class Track {
 			block = blocs.get(i);
 			if(block!=null) {
 				block.render(container, game, context);
-			}
+
+			}			
+		context.drawString("Score :\n"+score+"\n"+diff,0,0);
+
 		}
 
 
@@ -234,4 +256,11 @@ public class Track {
 
 
 	}
+
+	
+	/*public boolean collideWithBlock(Block block) {
+		int posXBlock=(int)(player.getPosX());
+		int posYBlock=(int)(player.getPosY());
+		return collide;
+	}*/
 }

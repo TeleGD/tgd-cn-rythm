@@ -86,7 +86,7 @@ public class World extends BasicGameState {
             boolean isMouseClicked = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
             if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 && my <=  this.height / 10 + this.height / 4  ) {
             	this.stateMenu = 1;
-            	track = new Track(this.width , this.height,1);
+            	track = new Track(this.width , this.height,1,player);
             }
             if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 + this.height / 10 && my <=  this.height / 4 + 2 *this.height / 10)   {
             	System.out.println("CLIIIIIIC SUR CHOSIR");
@@ -97,6 +97,11 @@ public class World extends BasicGameState {
 			track.update(container,  game,  delta);
 			player.update(container,game,delta);
 		}
+	}
+
+	private boolean collideWithPlayer() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -125,11 +130,10 @@ public class World extends BasicGameState {
 		/* Méthode exécutée une unique fois au début du jeu */
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
-
-		track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
+		track = new Track(this.width , this.height,1,player);//Réglage de la difficulté (0,1 ou 2)
 		player = new Player(this.height, this.width);
-
 		track.play(container, game);
+		
 	}
 
 	@Override
@@ -173,4 +177,16 @@ public class World extends BasicGameState {
 		return this.height;
 	}
 
+	public int getPosXPlayer() {
+		return (int)(player.getPosX());
+	}
+/*	public int getPosYPlayer() {
+		return (int)(player.getPosY());
+	}
+	public int getWidthPlayer() {
+		return player.getWidth();
+	}
+	public int getHeightPlayer() {
+		return (int)(player.getHeight());
+	}*/
 }
