@@ -15,7 +15,7 @@ public class Block {
 	private boolean life;
 	private boolean aPrendre;
 	private int width, height;
-	private Image goodBlock = Track.goodBlock;
+	private Image goodBlock = Track.getGoodBlock();
 	private Image badBlock = Track.badBlock;
 	
 	
@@ -53,7 +53,7 @@ public class Block {
 		// context.fillRect(posx,posy,width, 30);
 
 		if(this.score >=0){
-			goodBlock.getScaledCopy(this.width,this.height);
+			//goodBlock..getscaled(this.width,this.height);
 			goodBlock.draw(this.posx, this.posy);
 		}
 		else{

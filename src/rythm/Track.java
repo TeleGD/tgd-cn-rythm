@@ -43,7 +43,7 @@ public class Track {
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
-	public static Image goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png").getScaledCopy(245, 245);
+	private static Image goodBlock;
 	public static Image badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
 	private int k=0;
 	private Image background;
@@ -58,6 +58,8 @@ public class Track {
 		setSpeed(difficulty);
 		ArrayList<Long> listTime=listBlocks(this.seuil);
 		ArrayList<Integer> listRoute=getRoute(listTime);
+		System.out.println(width+" "+254*width/1274);
+		this.goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png").getScaledCopy(254*width/1274, 254*width/1272);
 		for(int u=0;u<listRoute.size();u++) {
 			//System.out.println(listTime.size());
 			timer.schedule(new TimerTask() {
@@ -88,6 +90,10 @@ public class Track {
 		}
 	}
 	
+	
+	public static Image getGoodBlock() {
+		return goodBlock;
+	}
 	//Réglage de la vitesse en fonction de la difficulté choisie
 	
 	public void setSpeed(int difficulty) {// Sert à adapter la vitesse de descente des tuiles en fonction de la difficulté choisie.
