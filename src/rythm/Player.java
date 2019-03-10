@@ -26,7 +26,7 @@ public class Player {
     public Player(String name, int height, int width){
         this.name = name;
         this.tracks = new ArrayList<>();
-        this.pos = new float[]{width*0.18f, width*0.34f, width*0.50f, width*0.66f, width*0.82f};
+        this.pos = new float[]{width*0.24f, width*0.37f, width*0.50f, width*0.6325f, width*0.7625f};
         this.posX = pos[2];
         this.posY = height - 110;
         this.height = height;
