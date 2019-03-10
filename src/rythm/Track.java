@@ -33,11 +33,11 @@ public class Track {
 	private int difficulty;//Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse tous les beats passer : quelquesoit leur énergie).
 	private float seuil;//Détermine fonction de la difficulté le seuil de niveau d'énergie pour les blocs que l'on crée.
 	//private int time;
-	private int yBlock=0;
 	private Block block;
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
+	private int k=0;
 
 	
 	public Track(int world_width,int world_height,int difficulty) {
@@ -47,16 +47,24 @@ public class Track {
 		this.posY=0;
 		setSpeed(difficulty);
 		ArrayList<Long> listTime=listBlocks(this.seuil);
-		for(long i : listTime) {
+		ArrayList<Integer> listRoute=getRoute(listTime);
+		for(int u=0;u<listRoute.size();u++) {
+			System.out.println(listRoute.get(u));
+			//System.out.println(listTime.size());
 			timer.schedule(new TimerTask() {
 				  @Override
 				  public void run() {
-					  block = new Block(posX,0,speed,0,false,width/5);
+					  block = new Block(posX+width*listRoute.get(k)/5,0,speed,0,false,width/5);
 					  blocs.add(block);
+					  k++;
+					  System.out.println(k);
+					  if (block == null) {
+						  System.out.println("AU SECOURS AU SECOURS AU SECOURS");
+					  }
 				    // Your database code here
 				  }
-			}, i);
-			System.out.println(i);
+			}, listTime.get(u));
+			//System.out.println(i);
 		}
 	}
 	
@@ -99,9 +107,10 @@ public class Track {
 		return listTime;
 	}
 	
-	public ArrayList<Integer> getRoute(ArrayList<Long> listTime) {
+	public ArrayList<Integer> getRoute(ArrayList<Long> listTime) {//Sert à connaitre le numéro de la voie(de 0 à 4) qui devra être emprunté par le bloc en fonction du "numéroé du bloc(comme si les blocs étaient numérotés
 		ArrayList<Integer> routes = new ArrayList<>();
-		for (long instant : listTime) {
+		for (int k = 0; k < listTime.size(); k++) {
+			long instant = listTime.get(k);
 			int i, j = 0;
 			boolean droite = false; boolean gauche = false;
 			boolean[] envisageable = {true, true, true, true, true};
@@ -109,14 +118,16 @@ public class Track {
 			while (encore) {
 				j = ThreadLocalRandom.current().nextInt(0, 5);	// Entier dans l'intervalle [0;4]
 				// On vérifie qu'il n'y ait pas de bloc dans les deux cases d'à côté :
-				i = listTime.size();
+				i = k-2;
 				while (i >= 0 && listTime.get(i) > instant-2*30/(0.5*0.06)) {	// 2 * taille_block / vitesse(pixels/ms)
 					if (routes.get(i) == j+1) { droite = true; }
 					if (routes.get(i) == j-1) { gauche = true; }
 					i--;
-				} if (droite && gauche) {
+				} envisageable[j] = false;
+				if (!droite || !gauche) {
 					encore = false;
 				} else { // On vérifie que choisir une autre route est envisageable
+					encore = false;
 					for (boolean c : envisageable) {
 						if (c) { encore = true; }
 					}
@@ -135,11 +146,15 @@ public class Track {
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		/* Méthode exécutée environ 60 fois par seconde */
-		if(block!=null) {
-			block.update(container, game, delta);
-		}
-		for(Block block : blocs) {
-			block.update(container,game,delta);
+		
+		for(int i = blocs.size()-1; i >= 0; i--) {
+			block = blocs.get(i);
+			if(block!=null) {
+				block.update(container, game, delta);
+				if (block.getPosY()>this.height) {
+					blocs.remove(i);
+				}
+			}
 		}
 				
 	}
@@ -156,8 +171,13 @@ public class Track {
 		context.fillRect(posX+width*4/5,posY,2,height);
 		context.fillRect(posX+width,posY,2,height);
 		context.fillRect(posX,27*height/30, width, 2);
-		if(block!=null) {
-			block.render(container, game, context);
+		
+		for(Block block : blocs) {
+			if(block != null) {
+				block.render(container, game, context);
+			} else {
+				System.out.println("AU SECOURS AU SECOURS AU SECOURS");
+			}
 		}
 		/* Méthode exécutée environ 60 fois par seconde */
 		

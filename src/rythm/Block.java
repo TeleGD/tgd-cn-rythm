@@ -53,4 +53,8 @@ public class Block {
 		context.setColor(Color.green);
 		context.fillRect(posx,posy,width, 30);
 	}
+	
+	public int getPosY() {
+		return this.posy;
+	}
 }
