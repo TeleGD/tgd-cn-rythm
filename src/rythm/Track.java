@@ -4,7 +4,11 @@ package rythm;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
+
 import org.newdawn.slick.Color;
 
 import v4lk.lwbd.BeatDetector;
@@ -20,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Track {
 	private int width;
@@ -37,6 +42,7 @@ public class Track {
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
+	private Image background;
 
 	
 	public Track(int world_width,int world_height,int difficulty) {
@@ -57,6 +63,7 @@ public class Track {
 			}, i);
 			System.out.println(i);
 		}
+		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
 	}
 	
 	//Réglage de la vitesse en fonction de la difficulté choisie
@@ -87,15 +94,41 @@ public class Track {
 	public ArrayList<Long> listBlocks (float seuil) {//Sert à prendre la lsite des moments forts de la musique et à générer un tableau des moments ou un bloc doit apparaitre dans l'écran//Double ou long ?
 		ArrayList<Long> listTime = new ArrayList<Long>();
 		Long instant;
-		Beat[] beats=lwbd();
+		Beat[] beats = lwbd();
 		for(Beat b : beats){
 			if(b.energy>seuil) {
 				instant=b.timeMs;
 				instant=instant-(long)(27/30*height/speed);
-				listTime.add(instant);	
+				listTime.add(instant);
 			}
 		}
 		return listTime;
+	}
+	
+	public ArrayList<Integer> getRoute(ArrayList<Long> listTime) {
+		ArrayList<Integer> routes = new ArrayList<>();
+		for (long instant : listTime) {
+			int i, j = 0;
+			boolean droite = false; boolean gauche = false;
+			boolean[] envisageable = {true, true, true, true, true};
+			boolean encore = true;
+			while (encore) {
+				j = ThreadLocalRandom.current().nextInt(0, 5);	// Entier dans l'intervalle [0;4]
+				// On vérifie qu'il n'y ait pas de bloc dans les deux cases d'à côté :
+				i = listTime.size();
+				while (i >= 0 && listTime.get(i) > instant-2*30/(0.5*0.06)) {	// 2 * taille_block / vitesse(pixels/ms)
+					if (routes.get(i) == j+1) { droite = true; }
+					if (routes.get(i) == j-1) { gauche = true; }
+					i--;
+				} if (droite && gauche) {
+					encore = false;
+				} else { // On vérifie que choisir une autre route est envisageable
+					for (boolean c : envisageable) {
+						if (c) { encore = true; }
+					}
+				}
+			} routes.add(j);
+		} return routes;
 	}
 	
 	
@@ -119,16 +152,16 @@ public class Track {
 
 	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(Color.blue);
-		context.fillRect(this.posX,this.posY,this.width,this.height);
-		context.setColor(Color.white);
-		context.fillRect(this.posX,this.posY,2,this.height);
-		context.fillRect(this.posX+this.width/5,this.posY,2,this.height);
-		context.fillRect(posX+width*2/5,posY,2,height);
-		context.fillRect(posX+width*3/5,posY,2,height);
-		context.fillRect(posX+width*4/5,posY,2,height);
-		context.fillRect(posX+width,posY,2,height);
-		context.fillRect(posX,27*height/30, width, 2);
+		// context.setColor(Color.blue);
+		// context.fillRect(this.posX,this.posY,this.width,this.height);
+		// context.setColor(Color.white);
+		// context.fillRect(this.posX,this.posY,2,this.height);
+		// context.fillRect(this.posX+this.width/5,this.posY,2,this.height);
+		// context.fillRect(posX+width*2/5,posY,2,height);
+		// context.fillRect(posX+width*3/5,posY,2,height);
+		// context.fillRect(posX+width*4/5,posY,2,height);
+		// context.fillRect(posX+width,posY,2,height);
+		// context.fillRect(posX,27*height/30, width, 2);
 		if(block!=null) {
 			block.render(container, game, context);
 		}
@@ -137,5 +170,7 @@ public class Track {
 		//time++;
 		//context.setColor(Color.white);
 		//context.drawString("Time : "+);
+
+		background.draw(this.posX, this.posY);
 	}
 }

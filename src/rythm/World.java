@@ -7,6 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -19,9 +20,14 @@ public class World extends BasicGameState {
 	private int height;
 	private Track track;
 	private Player player;
+<<<<<<< HEAD
 	private int stateMenu;
 	private Image fondMenu;
 	private Font font;
+||||||| merged common ancestors
+=======
+
+>>>>>>> 5b37cd9c594f14275ec81cad2126b2834fc30fd8
 	
 	public World (int ID) {
 		this.ID = ID;
@@ -35,8 +41,16 @@ public class World extends BasicGameState {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void init (GameContainer container, StateBasedGame game) throws SlickException  {
 		/* Méthode exécutée une unique fois au chargement du programme */
+||||||| merged common ancestors
+	public void init (GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée une unique fois au chargement du programme */
+=======
+	public void init (GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée une unique ois au chargement du programme */
+>>>>>>> 5b37cd9c594f14275ec81cad2126b2834fc30fd8
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		System.out.println(width + " ; " + height);
@@ -59,7 +73,7 @@ public class World extends BasicGameState {
 		/* Méthode exécutée à la disparition de la page */
 		if (this.state == 1) {
 			this.pause (container, game);
-		} else if (this.state == 3) {
+		} else if(this.state == 3) {
 			this.stop (container, game);
 			this.state = 0; // TODO: remove
 		}
@@ -67,18 +81,19 @@ public class World extends BasicGameState {
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		/* Méthode exécutée environ 60 fois par seconde */
+		/* Méthode exécutée environ 60 fis par seconde */
 		Input input = container.getInput ();
 		if (input.isKeyDown (Input.KEY_ESCAPE)) {
-			this.setState (1);
+			this.setState(1);
 			game.enterState (2, new FadeOutTransition (), new FadeInTransition ());
 		}
-		track.update(container, game, delta);
+		track.update(container,  game,  delta);
 		player.update(container,game,delta);
 	}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+
 		/* Méthode exécutée environ 60 fois par seconde */
 		if (stateMenu == 0) {
 			context.drawImage(this.fondMenu.getScaledCopy(this.width, this.height), 0, 0 );
@@ -91,7 +106,7 @@ public class World extends BasicGameState {
 		}
 	}
 
-	public void play (GameContainer container, StateBasedGame game) {
+	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
