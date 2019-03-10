@@ -86,6 +86,7 @@ public class World extends BasicGameState {
             boolean isMouseClicked = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
             if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 && my <=  this.height / 10 + this.height / 4  ) {
             	this.stateMenu = 1;
+            	track = new Track(this.width , this.height,1);
             }
             if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 + this.height / 10 && my <=  this.height / 4 + 2 *this.height / 10)   {
             	System.out.println("CLIIIIIIC SUR CHOSIR");
@@ -124,7 +125,7 @@ public class World extends BasicGameState {
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
 
-		track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
+		//track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
 		player = new Player(this.height, this.width);
 	}
 
