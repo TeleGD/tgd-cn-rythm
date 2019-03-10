@@ -65,6 +65,7 @@ public class Track {
 					  blocs.add(block);
 					  k++;
 					  System.out.println(k);
+					  System.out.println(posX+width*listRoute.get(k)/5);
 					  if (block == null) {
 						  System.out.println("AU SECOURS AU SECOURS AU SECOURS");
 					  }
@@ -188,7 +189,7 @@ public class Track {
 	
 
 		
-		/* Méthode exécutée environ 60 fois par seconde */
+		/* Méthode exécutée environs 60 fois par seconde */
 		
 		//time++;
 		//context.setColor(Color.white);
