@@ -36,6 +36,7 @@ public class Track {
 	private Block block;
 	private Timer timer = new Timer();
 	private double speed;
+	private ArrayList<Block> blocs = new ArrayList<Block>();
 
 	
 	public Track(int world_width,int world_height,int difficulty) {
@@ -50,9 +51,10 @@ public class Track {
 				  @Override
 				  public void run() {
 					  block = new Block(posX,0,speed,0,false,width/5);
+					  blocs.add(block);
 				    // Your database code here
 				  }
-			}, i*100);
+			}, i);
 			System.out.println(i);
 		}
 	}
@@ -108,6 +110,9 @@ public class Track {
 		/* Méthode exécutée environ 60 fois par seconde */
 		if(block!=null) {
 			block.update(container, game, delta);
+		}
+		for(Block block : blocs) {
+			block.update(container,game,delta);
 		}
 				
 	}
