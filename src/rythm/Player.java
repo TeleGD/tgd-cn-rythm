@@ -14,10 +14,9 @@ import org.newdawn.slick.Color;
 public class Player{
     private String name;
     private List<Track> tracks;
-    private int height, width;
+    private int height, width, actPos;
     private float speed, posX, posY;
     private float[] pos;
-    private int actPos;
     private boolean right, left, isMoving;
 
     public Player(int height, int width){
@@ -34,8 +33,8 @@ public class Player{
         this.width = width;
         this.actPos = 2;
         this.isMoving = false;
-        left = false;
-        right = false;
+        this.left = false;
+        this.right = false;
     }
 
     //@Override
@@ -93,5 +92,9 @@ public class Player{
 		if (key==Input.KEY_D) {
 			right=false;
 		}		
-	}
+    }
+    
+    public float getPosX(){
+        return this.posX;
+    }
 }
