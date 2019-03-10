@@ -43,7 +43,7 @@ public class Track {
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
 	private static Image goodBlock;
-	private static Image badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
+	private static Image badBlock;
 	private int k=0;
 	private Image background;
 	private Music song;
@@ -167,6 +167,21 @@ public class Track {
 	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
 		song.play();
+	}
+	
+	public void pause (GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée lors de la mise en pause du jeu */
+		song.pause();
+	}
+
+	public void resume (GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée lors de la reprise du jeu */
+		song.resume();
+	}
+
+	public void stop (GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée une unique fois à la fin du jeu */
+		song.stop();
 	}
 
 	//@Override

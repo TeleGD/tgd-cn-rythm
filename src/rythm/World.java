@@ -144,14 +144,17 @@ public class World extends BasicGameState {
 
 	public void pause (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée lors de la mise en pause du jeu */
+		track.pause(container,game);
 	}
 
 	public void resume (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée lors de la reprise du jeu */
+		track.resume(container,game);
 	}
 
 	public void stop (GameContainer container, StateBasedGame game) {
 		/* Méthode exécutée une unique fois à la fin du jeu */
+		track.stop(container,game);
 	}
 
 	public void setState (int state) {
