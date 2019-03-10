@@ -199,7 +199,8 @@ public class Track {
 		// context.fillRect(posX+width,posY,2,height);
 		// context.fillRect(posX,27*height/30, width, 2);
 		background.draw(this.posX, this.posY);
-		for(Block block : blocs) {
+		for(int i = blocs.size()-1; i >= 0; i--) {
+			block = blocs.get(i);
 			if(block!=null) {
 				block.render(container, game, context);
 			}			
