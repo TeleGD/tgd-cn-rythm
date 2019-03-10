@@ -46,9 +46,9 @@ public class World extends BasicGameState {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		System.out.println(width + " ; " + height);
-		this.fondMenu = new Image("res\\images\\fond_retro.png");
-		this.bouton1 = new Image ("res\\images\\bouton_jouer.png");
-		this.bouton2 = new Image ("res\\images\\bouton_choisir.png");
+		this.fondMenu = new Image("res/images/fond_retro.png");
+		this.bouton1 = new Image ("res/images/bouton_jouer.png");
+		this.bouton2 = new Image ("res/images/bouton_choisir.png");
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class World extends BasicGameState {
 		this.width = container.getWidth ();//
 		this.height = container.getHeight ();
 
-		//track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
+		track = new Track(this.width , this.height,1);//Réglage de la difficulté (0,1 ou 2)
 		player = new Player(this.height, this.width);
 
 		track.play(container, game);

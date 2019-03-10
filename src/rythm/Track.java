@@ -69,7 +69,7 @@ public class Track {
 		}
 		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
 		try {
-			this.song = new Music("/songs/paulette.ogg");
+			this.song = new Music("res/songs/paulette.ogg");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,7 +150,7 @@ public class Track {
 
 	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
-		song.loop(1, 1);
+		song.play();
 	}
 
 	//@Override
