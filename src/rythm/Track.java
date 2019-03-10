@@ -56,7 +56,7 @@ public class Track {
 			timer.schedule(new TimerTask() {
 				  @Override
 				  public void run() {
-					  block = new Block(posX,0,speed,0,false,width/5);
+					  block = new Block(posX,0,speed,0,false,width/5, height/5);
 					  blocs.add(block);
 				    // Your database code here
 				  }

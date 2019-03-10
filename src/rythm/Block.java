@@ -2,18 +2,22 @@ package rythm;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
+
 import org.newdawn.slick.Color;
 
 public class Block {
 	private int posx;
 	private int posy;
-	
 	private double speed;
 	private int score;
 	private boolean life;
 	private boolean aPrendre;
-	private int width;
+	private int width, height;
+	private Image goodBlock, badBlock;
 	
 	
 	public boolean getLife() {
@@ -25,22 +29,20 @@ public class Block {
 	}
 	
 	public Block() {
-		this.posx = 0;
-		this.posy = 0;
-		this.speed = 0;
-		this.score = 0;
-		this.life = true;
-		this.aPrendre = false;
+		this(0, 0, 0, 0, true, 50, 50);
 	}
 	
-	public Block(int posx, int posy, double speed, int score, boolean aPrendre,int width) {
+	public Block(int posx, int posy, double speed, int score, boolean aPrendre, int width, int height) {
 		this.posx = posx;
 		this.posy = posy;
 		this.speed = speed;
 		this.score = score;
 		this.life = true;
 		this.aPrendre = aPrendre;
-		this.width= width;
+		this.width = width;
+		this.height = height;
+		this.goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png");
+		this.badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
 	}
 	
 	//@Override
@@ -50,7 +52,14 @@ public class Block {
 
 	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(Color.green);
-		context.fillRect(posx,posy,width, 30);
+		// context.setColor(Color.green);
+		// context.fillRect(posx,posy,width, 30);
+
+		if(this.score >=0){
+			goodBlock.draw(this.posx, this.posy);
+		}
+		else{
+			badBlock.draw(this.posx, this.posy);
+		}
 	}
 }
