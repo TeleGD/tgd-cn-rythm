@@ -44,14 +44,17 @@ public class Track {
 		this.posX=(int) (0.1*world_width);
 		this.posY=0;
 		setSpeed(difficulty);
-		
-		timer.schedule(new TimerTask() {
-			  @Override
-			  public void run() {
-				  block = new Block(posX,0,speed,0,false,width/5);
-			    // Your database code here
-			  }
-		}, 4*1000);
+		ArrayList<Long> listTime=listBlocks(this.seuil);
+		for(long i : listTime) {
+			timer.schedule(new TimerTask() {
+				  @Override
+				  public void run() {
+					  block = new Block(posX,0,speed,0,false,width/5);
+				    // Your database code here
+				  }
+			}, i*100);
+			System.out.println(i);
+		}
 	}
 	
 	//Réglage de la vitesse en fonction de la difficulté choisie
@@ -79,7 +82,7 @@ public class Track {
 		}
 	}
 	
-	public ArrayList<Long> listBlocks (float seuil,int difficulty) {//Sert à prendre la lsite des moments forts de la musique et à générer un tableau des moments ou un bloc doit apparaitre dans l'écran//Double ou long ?
+	public ArrayList<Long> listBlocks (float seuil) {//Sert à prendre la lsite des moments forts de la musique et à générer un tableau des moments ou un bloc doit apparaitre dans l'écran//Double ou long ?
 		ArrayList<Long> listTime = new ArrayList<Long>();
 		Long instant;
 		Beat[] beats=lwbd();
