@@ -36,25 +36,43 @@ public class Track {
 	private int yBlock=0;
 	private Block block;
 	private Timer timer = new Timer();
+	private double speed;
+	private ArrayList<Block> blocs = new ArrayList<Block>();
 
 	
-	public Track(int world_width,int world_height) {
+	public Track(int world_width,int world_height,int difficulty) {
 		this.width=(int) (0.8*world_width);
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
 		this.posY=0;
-		
-		timer.schedule(new TimerTask() {
-			  @Override
-			  public void run() {
-				  block = new Block(posX,0,0.5,0,false,width/5);
-			    // Your database code here
-			  }
-		}, 4*1000);
+		setSpeed(difficulty);
+		ArrayList<Long> listTime=listBlocks(this.seuil);
+		for(long i : listTime) {
+			timer.schedule(new TimerTask() {
+				  @Override
+				  public void run() {
+					  block = new Block(posX,0,speed,0,false,width/5);
+					  blocs.add(block);
+				    // Your database code here
+				  }
+			}, i);
+			System.out.println(i);
+		}
 	}
 	
+	//Réglage de la vitesse en fonction de la difficulté choisie
 	
-	
+	public void setSpeed(int difficulty) {// Sert à adapter la vitesse de descente des tuiles en fonction de la difficulté choisie.
+		if(difficulty==0){//Si le niveau est choisi en facile
+			this.speed=0.2;
+		}
+		else if(difficulty==2){//Si le niveau choisi est difficile
+			this.speed=0.8;
+		}
+		else {//Si le niveau est choisi en moyen
+			this.speed=0.5;
+		}
+	}
 	
 	
 	public Beat[] lwbd(){
@@ -67,13 +85,14 @@ public class Track {
 		}
 	}
 	
-	public ArrayList<Long> listBlocks (float seuil,int difficulty) {
+	public ArrayList<Long> listBlocks (float seuil) {//Sert à prendre la lsite des moments forts de la musique et à générer un tableau des moments ou un bloc doit apparaitre dans l'écran//Double ou long ?
 		ArrayList<Long> listTime = new ArrayList<Long>();
 		Long instant;
 		Beat[] beats = lwbd();
 		for(Beat b : beats){
-			if(b.energy > seuil) {
-				instant = b.timeMs;
+			if(b.energy>seuil) {
+				instant=b.timeMs;
+				instant=instant-(long)(27/30*height/speed);
 				listTime.add(instant);
 			}
 		}
@@ -118,6 +137,9 @@ public class Track {
 		/* Méthode exécutée environ 60 fois par seconde */
 		if(block!=null) {
 			block.update(container, game, delta);
+		}
+		for(Block block : blocs) {
+			block.update(container,game,delta);
 		}
 				
 	}
