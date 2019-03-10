@@ -167,7 +167,7 @@ public class Track {
 
 	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
-		// Track.song.playAsMusic(1, 1, true);
+		Track.song.playAsMusic(1, 1, true);
 	}
 
 	public void pause (GameContainer container, StateBasedGame game) {
