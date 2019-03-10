@@ -17,7 +17,11 @@ public class Player {
     private float speed, posX, posY;
     private float[] pos;
     private boolean right, left, isMovingLeft, isMovingRight;
-    private Image car;
+    private static Image car;
+
+    static {
+        Player.car = AppLoader.loadPicture("/images/VOITURE.png");
+    }
 
     public Player(int height, int width){
         this("Trévor Théodule", height, width);
@@ -36,7 +40,6 @@ public class Player {
         this.isMovingRight = false;
         this.left = false;
         this.right = false;
-        this.car = AppLoader.loadPicture("/images/VOITURE.png");
     }
 
     //@Override
@@ -53,7 +56,7 @@ public class Player {
                 right = false;
             }
 		}
-		
+
 		if(isMovingRight && speed>0 && posX < pos[actPos]) {
             posX += speed*delta;
             if (posX >= pos[actPos]) {
@@ -63,7 +66,7 @@ public class Player {
                 speed = 0;
                 left = false;
                 right = false;
-            }			
+            }
 		}
 	}
 
@@ -103,9 +106,9 @@ public class Player {
 		}
 		if (key==Input.KEY_D) {
 			right=false;
-		}		
+		}
     }
-    
+
     public float getPosX(){
         return this.posX;
     }

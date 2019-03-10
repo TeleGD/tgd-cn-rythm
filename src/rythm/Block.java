@@ -17,20 +17,20 @@ public class Block {
 	private int width, height;
 	private Image goodBlock = Track.getGoodBlock();
 	private Image badBlock = Track.getBadBlock();
-	
-	
+
+
 	public boolean getLife() {
 		return this.life;
 	}
-	
+
 	public void setLife(boolean life) {
 		this.life = life;
 	}
-	
+
 	public Block() {
 		this(0, 0, 0, 0, true, 50, 50);
 	}
-	
+
 	public Block(int posx, int posy, double speed, int score, boolean aPrendre, int width, int height) {
 		this.posx = posx;
 		this.posy = posy;
@@ -41,7 +41,7 @@ public class Block {
 		this.width = width;
 		this.height = height;
 	}
-	
+
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		this.posy = (int) (this.posy + speed*delta);
@@ -60,7 +60,7 @@ public class Block {
 			badBlock.draw(this.posx, this.posy);
 		}
 	}
-	
+
 	public int getPosY() {
 		return this.posy;
 	}
