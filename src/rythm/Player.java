@@ -109,4 +109,13 @@ public class Player {
     public float getPosX(){
         return this.posX;
     }
+    public float getPosY() {
+    	return this.posY;
+    }//Utile ou non ?Dans le collideWithPlyer() du block normalement...
+    public int getWidth() {
+    	return this.width;
+    }
+    public int getHeight() {
+    	return this.height;
+    }
 }

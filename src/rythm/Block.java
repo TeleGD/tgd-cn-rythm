@@ -17,6 +17,7 @@ public class Block {
 	private int width, height;
 	private Image goodBlock = Track.getGoodBlock();
 	private Image badBlock = Track.getBadBlock();
+	private boolean collide;//Savoir si le bloc est en collision avec le joueur.
 	
 	
 	public boolean getLife() {
@@ -45,13 +46,16 @@ public class Block {
 	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		this.posy = (int) (this.posy + speed*delta);
+		//if(collide==true) {
+			//score=-1;
+		//}
 	}
 
 	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		// context.setColor(Color.green);
 		// context.fillRect(posx,posy,width, 30);
-
+		//if (collideWithPlayer(world.get))
 		if(this.score >=0){
 			//goodBlock..getscaled(this.width,this.height);
 			goodBlock.draw(this.posx, this.posy);
@@ -64,4 +68,17 @@ public class Block {
 	public int getPosY() {
 		return this.posy;
 	}
+	/*TENTATIVE DE REALISATION DE DETECTION DE COLISION DUN BLOC AVEC LE PLAYER
+	public boolean collideWithPlayer(int xp,int yp,int wp,int hp) {
+		//int xp=(int)(p.getPosX());
+		//int yp=(int)(p.getPosY());
+		
+		if((xp>posx+width)){
+			collide=true;
+		}
+		else {
+			collide=false;
+		}
+		return collide;
+	}*/
 }
