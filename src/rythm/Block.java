@@ -5,8 +5,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
-import app.AppLoader;
-
 import org.newdawn.slick.Color;
 
 public class Block {
@@ -17,7 +15,8 @@ public class Block {
 	private boolean life;
 	private boolean aPrendre;
 	private int width, height;
-	private Image goodBlock, badBlock;
+	private Image goodBlock = Track.goodBlock;
+	private Image badBlock = Track.badBlock;
 	
 	
 	public boolean getLife() {
@@ -41,8 +40,6 @@ public class Block {
 		this.aPrendre = aPrendre;
 		this.width = width;
 		this.height = height;
-		this.goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png");
-		this.badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
 	}
 	
 	//@Override
@@ -61,5 +58,9 @@ public class Block {
 		else{
 			badBlock.draw(this.posx, this.posy);
 		}
+	}
+	
+	public int getPosY() {
+		return this.posy;
 	}
 }
