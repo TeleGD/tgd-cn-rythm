@@ -45,7 +45,7 @@ public class World extends BasicGameState {
 
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
-		System.out.println(width + " ; " + height);
+		//System.out.println(width + " ; " + height);
 		this.fondMenu = new Image("res/images/fond_retro.png");
 		this.bouton1 = new Image ("res/images/bouton_jouer.png");
 		this.bouton2 = new Image ("res/images/bouton_choisir.png");

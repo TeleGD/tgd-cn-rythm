@@ -38,13 +38,12 @@ public class Track {
 	private String filename;
 	private int difficulty;//Vaudra 0 au niveau facile, 1 au niveau moyen, 2 au niveau difficile(on laisse tous les beats passer : quelquesoit leur énergie).
 	private float seuil;//Détermine fonction de la difficulté le seuil de niveau d'énergie pour les blocs que l'on crée.
-	//private int time;
 	private Block block;
 	private Timer timer = new Timer();
 	private double speed;
 	private ArrayList<Block> blocs = new ArrayList<Block>();
 	private static Image goodBlock;
-	public static Image badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
+	private static Image badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
 	private int k=0;
 	private Image background;
 	private Music song;
@@ -54,32 +53,25 @@ public class Track {
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
 		this.posY=0;
-		//this.goodBlock.getScaledCopy(254/1272*width, 254/1272*width);
 		setSpeed(difficulty);
 		ArrayList<Long> listTime=listBlocks(this.seuil);
 		ArrayList<Integer> listRoute=getRoute(listTime);
 		System.out.println(width+" "+254*width/1274);
 		this.goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png").getScaledCopy(254*width/1274, 254*width/1272);
+		this.badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png").getScaledCopy(254*width/1274, 254*width/1272);
 		for(int u=0;u<listRoute.size();u++) {
-			//System.out.println(listTime.size());
 			timer.schedule(new TimerTask() {
 				  @Override
 				  public void run() {
-					  //System.out.println(posX+width*listRoute.get(k)/5);
-					  //System.out.println(listRoute.get(k)+" "+listRoute.get(k)*width*254/1274);
-					  //System.out.println(posX+width*140*8/15540);
 					  block = new Block(posX+width*140*8/15540+listRoute.get(k)*width*254/1554,0,speed,0,false,254/1272*width,254/1272*width);
 					  blocs.add(block);
-					  k++;
-					  //System.out.println(k);
-					  
+					  k++;					  
 					  if (block == null) {
 						  System.out.println("AU SECOURS AU SECOURS AU SECOURS");
 					  }
 				    // Your database code here
 				  }
 			}, listTime.get(u));
-			//System.out.println(i);
 		}
 		this.background = AppLoader.loadPicture("/images/HIGHWAY.png").getScaledCopy(this.width, this.height);
 		try {
@@ -93,6 +85,9 @@ public class Track {
 	
 	public static Image getGoodBlock() {
 		return goodBlock;
+	}
+	public static Image getBadBlock() {
+		return badBlock;
 	}
 	//Réglage de la vitesse en fonction de la difficulté choisie
 	

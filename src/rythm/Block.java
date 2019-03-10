@@ -16,7 +16,7 @@ public class Block {
 	private boolean aPrendre;
 	private int width, height;
 	private Image goodBlock = Track.getGoodBlock();
-	private Image badBlock = Track.badBlock;
+	private Image badBlock = Track.getBadBlock();
 	
 	
 	public boolean getLife() {
