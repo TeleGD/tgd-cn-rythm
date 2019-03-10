@@ -6,8 +6,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -20,8 +18,6 @@ import v4lk.lwbd.decoders.Decoder;
 import v4lk.lwbd.decoders.JLayerMp3Decoder;
 import v4lk.lwbd.util.Beat;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -113,10 +109,8 @@ public class Track {
 
 	public Beat[] lwbd(){
 		try {
-			File audioFile = new File("res/songs/paulette.mp3");
-			return BeatDetector.detectBeats(audioFile, AudioType.MP3);
-		}
-		catch(Exception e) {
+			return BeatDetector.detectBeats(AppLoader.openStream("/songs/paulette.mp3"), AudioType.MP3);
+		}  catch (IOException error) {
 			return null;
 		}
 	}
@@ -173,7 +167,7 @@ public class Track {
 
 	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
-		Track.song.playAsMusic(1, 1, true);
+		// Track.song.playAsMusic(1, 1, true);
 	}
 
 	public void pause (GameContainer container, StateBasedGame game) {
