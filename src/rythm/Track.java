@@ -157,7 +157,7 @@ public class Track {
 				j = ThreadLocalRandom.current().nextInt(0, 5);	// Entier dans l'intervalle [0;4]
 				// On vérifie qu'il n'y ait pas de bloc dans les deux cases d'à côté :
 				i = k-2;
-				while (i >= 0 && listTime.get(i) > instant-2*30/(0.5*0.06)) {	// 2 * taille_block / vitesse(pixels/ms)
+				while (i >= 0 && listTime.get(i) > instant-2*sizeBlock/(speed*0.06)) {	// 2 * taille_block / vitesse(pixels/ms)
 					if (routes.get(i) == j+1) { droite = true; }
 					if (routes.get(i) == j-1) { gauche = true; }
 					i--;
