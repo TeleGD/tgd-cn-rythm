@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="tgd-cn-rythm/res/natives"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="tgd-le-bon-gros-son-sa-mere/res/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="res"/>
+	<classpathentry kind="lib" path="res"/>
 	<classpathentry kind="lib" path="lib/ibxm.jar"/>
 	<classpathentry kind="lib" path="lib/jinput.jar"/>
 	<classpathentry kind="lib" path="lib/jnlp.jar"/>
@@ -21,10 +21,6 @@
 	<classpathentry kind="lib" path="lib/slick.jar"/>
 	<classpathentry kind="lib" path="lib/tinylinepp.jar"/>
 	<classpathentry kind="lib" path="lib/v4lk.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

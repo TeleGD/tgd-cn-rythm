@@ -17,6 +17,9 @@ archive:
 	chmod u+x zip/main.bat
 	zip main.zip zip/*
 
+exec:
+	java -Djava.library.path=zip -jar zip/main.jar
+
 clean:
 	rm -r -f bin/*
 	rm -r -f zip/*
@@ -37,5 +40,4 @@ tncy:
 	@echo "\033[0m   2018-2019"
 	@echo ""
 
-
-.PHONY: build run archive clean
+.PHONY: build run archive exec clean tncy

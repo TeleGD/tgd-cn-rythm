@@ -1,4 +1,4 @@
-package rythm;
+package leBonGrosSonSaMere;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,6 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.Color;
 
 public class Block {
+
 	private int posx;
 	private int posy;
 	private double speed;
@@ -18,8 +19,7 @@ public class Block {
 	private Image goodBlock = Track.getGoodBlock();
 	private Image badBlock = Track.getBadBlock();
 	private boolean collide;//Savoir si le bloc est en collision avec le joueur.
-	
-	
+
 	public boolean getLife() {
 		return this.life;
 	}
@@ -43,7 +43,6 @@ public class Block {
 		this.height = height;
 	}
 
-	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		this.posy = (int) (this.posy + speed*delta);
 		//if(collide==true) {
@@ -51,7 +50,6 @@ public class Block {
 		//}
 	}
 
-	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		// context.setColor(Color.green);
 		// context.fillRect(posx,posy,width, 30);
@@ -68,11 +66,12 @@ public class Block {
 	public int getPosY() {
 		return this.posy;
 	}
+
 	/*TENTATIVE DE REALISATION DE DETECTION DE COLISION DUN BLOC AVEC LE PLAYER
 	public boolean collideWithPlayer(int xp,int yp,int wp,int hp) {
 		//int xp=(int)(p.getPosX());
 		//int yp=(int)(p.getPosY());
-		
+
 		if((xp>posx+width)){
 			collide=true;
 		}
@@ -81,4 +80,5 @@ public class Block {
 		}
 		return collide;
 	}*/
+
 }

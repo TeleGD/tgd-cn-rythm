@@ -1,4 +1,4 @@
-package rythm;
+package leBonGrosSonSaMere;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -47,7 +47,7 @@ public class World extends BasicGameState {
 
 	@Override
 
-	public void init (GameContainer container, StateBasedGame game) throws SlickException  {
+	public void init (GameContainer container, StateBasedGame game) throws SlickException {
 		/* Méthode exécutée une unique fois au chargement du programme */
 	}
 
@@ -82,19 +82,19 @@ public class World extends BasicGameState {
 		}
 		if(stateMenu == 0) {
 			int mx = container.getInput().getMouseX();
-            int my = container.getInput().getMouseY();
-            boolean isMouseClicked = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
-            if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 && my <=  this.height / 10 + this.height / 4  ) {
-            	this.stateMenu = 1;
-            	track = new Track(this.width , this.height,1,player);
-            }
-            if ( isMouseClicked && mx >=  this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 + this.height / 10 && my <=  this.height / 4 + 2 *this.height / 10)   {
-            	System.out.println("CLIIIIIIC SUR CHOSIR");
-            }
+			int my = container.getInput().getMouseY();
+			boolean isMouseClicked = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
+			if ( isMouseClicked && mx >= this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 && my <= this.height / 10 + this.height / 4 ) {
+				this.stateMenu = 1;
+				track = new Track(this.width , this.height,1,player);
+			}
+			if ( isMouseClicked && mx >= this.width / 10 && mx <= 2* this.width / 10 && my >= this.height / 4 + this.height / 10 && my <= this.height / 4 + 2 *this.height / 10) {
+				System.out.println("CLIIIIIIC SUR CHOSIR");
+			}
 		}
 		else
 		{
-			track.update(container,  game,  delta);
+			track.update(container, game, delta);
 			player.update(container,game,delta);
 		}
 	}
@@ -115,7 +115,7 @@ public class World extends BasicGameState {
 			context.drawImage(World.bouton1.getScaledCopy(this.width/10, this.height/10), this.width / 10, this.height / 4);
 
 			//bouton choisir le gros son
-			context.drawImage(World.bouton2.getScaledCopy(this.width/10, this.height/10), this.width / 10   , this.height / 4 + height / 10);
+			context.drawImage(World.bouton2.getScaledCopy(this.width/10, this.height/10), this.width / 10 , this.height / 4 + height / 10);
 
 
 		}
@@ -133,7 +133,7 @@ public class World extends BasicGameState {
 		track = new Track(this.width , this.height,1,player);//Réglage de la difficulté (0,1 ou 2)
 		player = new Player(this.height, this.width);
 		track.play(container, game);
-		
+
 	}
 
 	@Override
@@ -180,13 +180,17 @@ public class World extends BasicGameState {
 	public int getPosXPlayer() {
 		return (int)(player.getPosX());
 	}
-/*	public int getPosYPlayer() {
+
+	/* public int getPosYPlayer() {
 		return (int)(player.getPosY());
 	}
+
 	public int getWidthPlayer() {
 		return player.getWidth();
 	}
+
 	public int getHeightPlayer() {
 		return (int)(player.getHeight());
-	}*/
+	} */
+
 }

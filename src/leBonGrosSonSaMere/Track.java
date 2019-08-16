@@ -1,4 +1,4 @@
-package rythm;
+package leBonGrosSonSaMere;
 
 //import java.util.*;
 
@@ -25,6 +25,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Track {
+
 	private int width;
 	private int height;
 	private int posX;
@@ -57,14 +58,14 @@ public class Track {
 		Track.song = AppLoader.loadAudio("/songs/paulette.ogg");
 		Track.songPos = 0;
 	}
+
 	private boolean collide;
 	private int sizeBlock;//La taille d'un bloc, pour la modifier plus facilement si jamais
 	private Player player;
 	String diff;//Permet d'afficher la difficulté
-	
-	public Track(int world_width,int world_height,int difficulty,Player player) {
-	
+	//private Block block = new Block(posX,0,1,0,false,(int)(width/5));
 
+	public Track(int world_width,int world_height,int difficulty,Player player) {
 		this.width=(int) (0.8*world_width);
 		this.height=world_height;
 		this.posX=(int) (0.1*world_width);
@@ -84,29 +85,29 @@ public class Track {
 
 		for(int u=0;u<listRoute.size();u++) {
 			timer.schedule(new TimerTask() {
-				  @Override
-				  public void run() {
-					  block = new Block(posX+width*140*8/15540+listRoute.get(k)*width*254/1554,0,speed,0,false,sizeBlock,sizeBlock);
-					  blocs.add(block);
-					  k++;
-					  if (block == null) {
-						  System.out.println("AU SECOURS AU SECOURS AU SECOURS");
-					  }
-				    // Your database code here
-				  }
+				@Override
+				public void run() {
+					block = new Block(posX+width*140*8/15540+listRoute.get(k)*width*254/1554,0,speed,0,false,sizeBlock,sizeBlock);
+					blocs.add(block);
+					k++;
+					if (block == null) {
+						System.out.println("AU SECOURS AU SECOURS AU SECOURS");
+					}
+					// Your database code here
+				}
 			}, listTime.get(u));
 		}
 	}
 
-
 	public static Image getGoodBlock() {
 		return goodBlock;
 	}
+
 	public static Image getBadBlock() {
 		return badBlock;
 	}
-	//Réglage de la vitesse en fonction de la difficulté choisie
 
+	//Réglage de la vitesse en fonction de la difficulté choisie
 	public void setSpeed(int difficulty) {// Sert à adapter la vitesse de descente des tuiles en fonction de la difficulté choisie.
 		if(difficulty==0){//Si le niveau est choisi en facile
 			this.speed=0.2;
@@ -121,7 +122,6 @@ public class Track {
 			this.diff="Moyen";
 		}
 	}
-
 
 	public Beat[] lwbd(){
 		try {
@@ -174,12 +174,9 @@ public class Track {
 		} return routes;
 	}
 
-
 	public int getScore() {
 		return score;
 	}
-
-	//private Block block = new Block(posX,0,1,0,false,(int)(width/5));
 
 	public void play (GameContainer container, StateBasedGame game){
 		/* Méthode exécutée une unique fois au début du jeu */
@@ -203,10 +200,8 @@ public class Track {
 		Track.song.stop();
 	}
 
-	//@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		/* Méthode exécutée environ 60 fois par seconde */
-
 		for(int i = blocs.size()-1; i >= 0; i--) {
 			/*if(block.collideWithPlayer((int)(player.getPosX()), (int)(player.getPosY()), player.getWidth(), player.getHeight())==true) {
 				System.out.println("Collision !!!!"+player.getPosX()+" "+player.getWidth());
@@ -222,9 +217,8 @@ public class Track {
 
 	}
 
-	//@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-
+		/* Méthode exécutée environs 60 fois par seconde */
 		// context.setColor(Color.blue);
 		// context.fillRect(this.posX,this.posY,this.width,this.height);
 		// context.setColor(Color.white);
@@ -241,26 +235,19 @@ public class Track {
 			if(block!=null) {
 				block.render(container, game, context);
 
-			}			
+			}
 		context.drawString("Score :\n"+score+"\n"+diff,0,0);
 
 		}
-
-
-
-		/* Méthode exécutée environs 60 fois par seconde */
-
 		//time++;
 		//context.setColor(Color.white);
 		//context.drawString("Time : "+);
-
-
 	}
 
-	
-	/*public boolean collideWithBlock(Block block) {
+	/* public boolean collideWithBlock(Block block) {
 		int posXBlock=(int)(player.getPosX());
 		int posYBlock=(int)(player.getPosY());
 		return collide;
-	}*/
+	} */
+
 }
