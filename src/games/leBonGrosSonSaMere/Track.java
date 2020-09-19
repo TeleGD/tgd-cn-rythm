@@ -1,4 +1,4 @@
-package leBonGrosSonSaMere;
+package games.leBonGrosSonSaMere;
 
 //import java.util.*;
 
@@ -51,11 +51,11 @@ public class Track {
 	private static float songPos = 0;
 
 	static {
-		Track.goodBlock = AppLoader.loadPicture("/images/komanjaplsa.png");
-		Track.badBlock = AppLoader.loadPicture("/images/Mauvais_Beat.png");
+		Track.goodBlock = AppLoader.loadPicture("/images/leBonGrosSonSaMere/komanjaplsa.png");
+		Track.badBlock = AppLoader.loadPicture("/images/leBonGrosSonSaMere/Mauvais_Beat.png");
 		Track.areBlocksScaled = false;
-		Track.background = AppLoader.loadPicture("/images/HIGHWAY.png");
-		Track.song = AppLoader.loadAudio("/songs/paulette.ogg");
+		Track.background = AppLoader.loadPicture("/images/leBonGrosSonSaMere/HIGHWAY.png");
+		Track.song = AppLoader.loadAudio("/musics/leBonGrosSonSaMere/paulette.ogg");
 		Track.songPos = 0;
 	}
 

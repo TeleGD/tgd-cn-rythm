@@ -1,4 +1,4 @@
-package leBonGrosSonSaMere;
+package games.leBonGrosSonSaMere;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -29,9 +29,9 @@ public class World extends BasicGameState {
 	private static Image bouton2;
 
 	static {
-		World.fondMenu = AppLoader.loadPicture("/images/fond_retro.png");
-		World.bouton1 = AppLoader.loadPicture("/images/bouton_jouer.png");
-		World.bouton2 = AppLoader.loadPicture("/images/bouton_choisir.png");
+		World.fondMenu = AppLoader.loadPicture("/images/leBonGrosSonSaMere/fond_retro.png");
+		World.bouton1 = AppLoader.loadPicture("/images/leBonGrosSonSaMere/bouton_jouer.png");
+		World.bouton2 = AppLoader.loadPicture("/images/leBonGrosSonSaMere/bouton_choisir.png");
 	}
 
 	public World (int ID) {

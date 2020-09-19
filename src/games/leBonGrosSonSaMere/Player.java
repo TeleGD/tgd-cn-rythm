@@ -1,4 +1,4 @@
-package leBonGrosSonSaMere;
+package games.leBonGrosSonSaMere;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class Player {
 	private static Image car;
 
 	static {
-		Player.car = AppLoader.loadPicture("/images/VOITURE.png");
+		Player.car = AppLoader.loadPicture("/images/leBonGrosSonSaMere/VOITURE.png");
 	}
 
 	public Player(int height, int width){

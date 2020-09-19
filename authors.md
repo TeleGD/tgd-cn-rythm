@@ -1,5 +1,5 @@
 - Fabien Bernier (@Locust2520)
 - Frantz Darbon (@Noxerinno)
-- Lucas Thomas
+- Lucas Thomas (@lucas-tms)
 - Maxime Maxime Botreau-Roussel-Bonneterre (@Maxime-Daalimar)
 - Océane Chazé (@OceaneC)

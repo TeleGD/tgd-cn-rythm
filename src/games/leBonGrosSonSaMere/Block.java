@@ -1,4 +1,4 @@
-package leBonGrosSonSaMere;
+package games.leBonGrosSonSaMere;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
