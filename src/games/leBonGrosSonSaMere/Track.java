@@ -18,6 +18,7 @@ import v4lk.lwbd.decoders.Decoder;
 import v4lk.lwbd.decoders.JLayerMp3Decoder;
 import v4lk.lwbd.util.Beat;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -125,7 +126,7 @@ public class Track {
 
 	public Beat[] lwbd(){
 		try {
-			return BeatDetector.detectBeats(AppLoader.openStream("/songs/paulette.mp3"), AudioType.MP3);
+			return BeatDetector.detectBeats(AppLoader.openStream("/musics/leBonGrosSonSaMere/paulette.mp3"), AudioType.MP3);
 		}  catch (IOException error) {
 			return null;
 		}
